@@ -3,13 +3,12 @@
 #include <memory>
 
 struct IStrategy{ 
+
 	virtual ~IStrategy(){std::cout << std::endl;}
-	
 	virtual auto compute(double x, double y) const -> double = 0;
 	virtual auto name() const -> const std::string = 0; 
-	virtual auto printa() const -> const std::string = 0;
-
 	virtual auto clone() const -> IStrategy* = 0;
+
 };
 
 
@@ -23,12 +22,17 @@ public :
 
 	Context()
 		: _strategy(nullptr) {}
-	Context(IStrategy* s)
-		: _strategy{s} {}
+	// Context(IStrategy* s)
+	// 	: _strategy{s} {}
+
 	Context(IStrategy& s)
-		: _strategy{s.clone()} {
+		
+		: _strategy(s.clone()) 
+		
+		{
 			std::cout << "hello world";
 		}
+
 	auto setStrategy(IStrategy* s){
 		_strategy.reset(s);
 		}
@@ -70,10 +74,7 @@ class AddStrategy: public IStrategy
 			std::cerr << "\n     [Trace] AddStrategy => I was cloned "<< "\n" ;
 			return new AddStrategy(*this);
 		}
-		auto printa() const -> const std::string{
-			// std::cout << "====== Straregy = Sub =====" << std::endl;
-			return "hello";
-		}
+
 
 };
 
@@ -90,10 +91,6 @@ class MulStrategy: public IStrategy
 		auto clone() const -> IStrategy*{
 			std::cerr << "\n  [Trace] MulStrategy => I was cloned" << "\n";
 			return new MulStrategy(*this);
-		}
-		auto printa() const -> const std::string{
-			// std::cout << "====== Straregy = Sub =====" << std::endl;
-			return "hello";
 		}
 
 
@@ -113,10 +110,7 @@ class SubStrategy: public IStrategy
 			std::cerr << "\n    [Trace] AddStrategy => I was cloned "<< "\n" ;
 			return new SubStrategy(*this);
 		}
-		auto printa() const -> const std::string{
-			// std::cout << "====== Straregy = Sub =====" << std::endl;
-			return "hello";
-		}
+	
 	
 
 };

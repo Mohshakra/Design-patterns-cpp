@@ -1,1 +1,5 @@
 Check what const functions is used for
+
+
+
+Try strategy with struct
